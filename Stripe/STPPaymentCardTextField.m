@@ -66,7 +66,7 @@
 
 CGFloat const STPPaymentCardTextFieldDefaultPadding = 13;
 CGFloat const STPPaymentCardTextFieldDefaultInsets = 13;
-CGFloat const STPPaymentCardTextFieldMinimumPadding = 4;
+CGFloat const STPPaymentCardTextFieldMinimumPadding = 8;
 
 #if CGFLOAT_IS_DOUBLE
 #define stp_roundCGFloat(x) round(x)
@@ -549,7 +549,13 @@ CGFloat const STPPaymentCardTextFieldMinimumPadding = 4;
 // TODO: cache these values
 - (CGFloat)numberFieldFullWidth {
     // Current longest possible pan is 16 digits which our standard sample fits
-    return [self widthForCardNumber:self.viewModel.defaultPlaceholder];
+    if ([self.viewModel validationStateForField:STPCardFieldTypeNumber] == STPCardValidationStateValid) {
+        return [self widthForCardNumber:self.viewModel.cardNumber];
+    }
+    else {
+        return MAX([self widthForCardNumber:self.viewModel.cardNumber],
+                   [self widthForCardNumber:self.viewModel.defaultPlaceholder]);
+    }
 }
 
 - (CGFloat)numberFieldCompressedWidth {
@@ -566,7 +572,12 @@ CGFloat const STPPaymentCardTextFieldMinimumPadding = 4;
 }
 
 - (CGFloat)postalCodeFieldFullWidth {
-    return [self widthForText:@"88888-8888"];
+    if (self.viewModel.postalCode.length <= 5) {
+        return [self widthForText:@"88888"];
+    }
+    else {
+        return [self widthForText:@"88888-8888"];
+    }
 }
 
 
@@ -853,9 +864,11 @@ typedef NS_ENUM(NSInteger, STPCardTextFieldState) {
     CGFloat xOffset = STPPaymentCardTextFieldDefaultInsets;
     CGFloat width = 0;
 
+    // Make all text fields actually slightly wider than needed so that when the
+    // cursor is at the end position the contents aren't shifted off to the left side
+    CGFloat additionalWidth = [self widthForText:@"8"];
 
     width = [self numberFieldFullWidth]; // Number field is always actually full width, just sometimes clipped off to the left when "compressed"
-
     if (panVisibility == STPCardTextFieldStateCompressed) {
         // Need to lower xOffset so pan is partially off-screen
 
@@ -897,7 +910,7 @@ typedef NS_ENUM(NSInteger, STPCardTextFieldState) {
         }
     }
 
-    self.numberField.frame = CGRectMake(xOffset, 0, width, fieldsHeight);
+    self.numberField.frame = CGRectMake(xOffset, 0, width + additionalWidth, fieldsHeight);
     xOffset += width + hPadding;
 
     width = [self expirationFieldWidth];
@@ -908,10 +921,10 @@ typedef NS_ENUM(NSInteger, STPCardTextFieldState) {
     self.cvcField.frame = CGRectMake(xOffset, 0, width, fieldsHeight);
     xOffset += width + hPadding;
 
-    // Fill postal code field with remaining space if necessary
     if ([self postalCodeFieldIsEnabled]) {
-        width = CGRectGetWidth(self.fieldsView.frame) - xOffset - STPPaymentCardTextFieldDefaultInsets;
-        self.postalCodeField.frame = CGRectMake(xOffset, 0, width, fieldsHeight);
+        width = self.fieldsView.frame.size.width - xOffset - STPPaymentCardTextFieldDefaultInsets;
+//        width = [self postalCodeFieldFullWidth];
+        self.postalCodeField.frame = CGRectMake(xOffset, 0, width + additionalWidth, fieldsHeight);
     }
 
     self.numberField.alpha = (panVisibility == STPCardTextFieldStateHidden) ? 0.0:  1.0;
@@ -927,6 +940,7 @@ typedef NS_ENUM(NSInteger, STPCardTextFieldState) {
     STPFormTextField *textField = [[STPFormTextField alloc] initWithFrame:CGRectZero];
     textField.backgroundColor = [UIColor clearColor];
     textField.keyboardType = UIKeyboardTypePhonePad;
+    textField.textAlignment = NSTextAlignmentLeft;
     textField.font = self.font;
     textField.defaultColor = self.textColor;
     textField.errorColor = self.textErrorColor;
@@ -946,7 +960,9 @@ typedef void (^STPLayoutAnimationCompletionBlock)(BOOL completed);
         focusedField = @(STPCardFieldTypeNumber);
     }
 
-    if ([self.focusedTextFieldForLayout isEqualToNumber:focusedField]) {
+    if ((focusedField == nil && self.focusedTextFieldForLayout == nil)
+        || (focusedField != nil && [self.focusedTextFieldForLayout isEqualToNumber:focusedField])
+        ) {
         if (completion) {
             completion(YES);
         }
@@ -1010,6 +1026,7 @@ typedef void (^STPLayoutAnimationCompletionBlock)(BOOL completed);
     switch (fieldType) {
         case STPCardFieldTypeNumber:
             self.viewModel.cardNumber = input.string;
+            [self setNeedsLayout];
             break;
         case STPCardFieldTypeExpiration:
             self.viewModel.rawExpiration = input.string;
@@ -1019,6 +1036,7 @@ typedef void (^STPLayoutAnimationCompletionBlock)(BOOL completed);
             break;
         case STPCardFieldTypePostalCode:
             self.viewModel.postalCode = input.string;
+            [self setNeedsLayout];
             break;
     }
     
@@ -1114,6 +1132,13 @@ typedef void (^STPLayoutAnimationCompletionBlock)(BOOL completed);
         case STPCardFieldTypePostalCode:
             // TODO
             break;
+    }
+
+    if (!self.isFirstResponder) {
+        [self layoutViewsToFocusField:nil
+                             animated:YES
+                           completion:nil];
+        [self updateImageForFieldType:STPCardFieldTypeNumber];
     }
 }
 
