@@ -247,8 +247,8 @@ NSString *stringIfHasContentsElseNil(NSString *string);
         case STPBillingAddressFieldsNone:
             return YES;
         case STPBillingAddressFieldsZip:
-            return [STPPostalCodeValidator stringIsValidPostalCode:self.postalCode 
-                                                       countryCode:self.country];
+            return ([STPPostalCodeValidator validationStateForPostalCode:self.postalCode
+                                                            countryCode:self.country] == STPCardValidationStateValid);
         case STPBillingAddressFieldsFull:
             return [self hasValidPostalAddress];
     }
@@ -277,8 +277,8 @@ NSString *stringIfHasContentsElseNil(NSString *string);
             && self.city.length > 0 
             && self.country.length > 0 
             && (self.state.length > 0 || ![self.country isEqualToString:@"US"])  
-            && [STPPostalCodeValidator stringIsValidPostalCode:self.postalCode 
-                                                   countryCode:self.country]);
+            && ([STPPostalCodeValidator validationStateForPostalCode:self.postalCode
+                                                         countryCode:self.country] == STPCardValidationStateValid));
 }
 
 + (PKAddressField)applePayAddressFieldsFromBillingAddressFields:(STPBillingAddressFields)billingAddressFields {
