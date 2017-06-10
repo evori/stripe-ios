@@ -646,6 +646,10 @@
 		F19491E81E60DD9C001E1FC2 /* STPSourceSEPADebitDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = F19491E61E60DD9C001E1FC2 /* STPSourceSEPADebitDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F1A0197C1EA5733200354301 /* STPSourceParams+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F1A0197A1EA5733200354301 /* STPSourceParams+Private.h */; };
 		F1A0197D1EA5733200354301 /* STPSourceParams+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F1A0197A1EA5733200354301 /* STPSourceParams+Private.h */; };
+		F1A2F92C1EEB6A70006B0456 /* NSCharacterSet+Stripe.h in Headers */ = {isa = PBXBuildFile; fileRef = F1A2F92A1EEB6A70006B0456 /* NSCharacterSet+Stripe.h */; };
+		F1A2F92D1EEB6A70006B0456 /* NSCharacterSet+Stripe.h in Headers */ = {isa = PBXBuildFile; fileRef = F1A2F92A1EEB6A70006B0456 /* NSCharacterSet+Stripe.h */; };
+		F1A2F92E1EEB6A70006B0456 /* NSCharacterSet+Stripe.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A2F92B1EEB6A70006B0456 /* NSCharacterSet+Stripe.m */; };
+		F1A2F92F1EEB6A70006B0456 /* NSCharacterSet+Stripe.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A2F92B1EEB6A70006B0456 /* NSCharacterSet+Stripe.m */; };
 		F1B980941DB550E60075332E /* STPPaymentMethodsViewControllerLocalizationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B980931DB550E60075332E /* STPPaymentMethodsViewControllerLocalizationTests.m */; };
 		F1BA241E1E57BE5E00E4A1CF /* CardSource.json in Resources */ = {isa = PBXBuildFile; fileRef = F1BA241C1E57BE5700E4A1CF /* CardSource.json */; };
 		F1BA24211E57BECA00E4A1CF /* 3DSSource.json in Resources */ = {isa = PBXBuildFile; fileRef = F1BA241F1E57BEC600E4A1CF /* 3DSSource.json */; };
@@ -1128,6 +1132,8 @@
 		F19491E11E60DD72001E1FC2 /* STPSourceSEPADebitDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPSourceSEPADebitDetails.m; sourceTree = "<group>"; };
 		F19491E61E60DD9C001E1FC2 /* STPSourceSEPADebitDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPSourceSEPADebitDetails.h; path = PublicHeaders/STPSourceSEPADebitDetails.h; sourceTree = "<group>"; };
 		F1A0197A1EA5733200354301 /* STPSourceParams+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STPSourceParams+Private.h"; sourceTree = "<group>"; };
+		F1A2F92A1EEB6A70006B0456 /* NSCharacterSet+Stripe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCharacterSet+Stripe.h"; sourceTree = "<group>"; };
+		F1A2F92B1EEB6A70006B0456 /* NSCharacterSet+Stripe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCharacterSet+Stripe.m"; sourceTree = "<group>"; };
 		F1B980931DB550E60075332E /* STPPaymentMethodsViewControllerLocalizationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPPaymentMethodsViewControllerLocalizationTests.m; sourceTree = "<group>"; };
 		F1BA241C1E57BE5700E4A1CF /* CardSource.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CardSource.json; sourceTree = "<group>"; };
 		F1BA241F1E57BEC600E4A1CF /* 3DSSource.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 3DSSource.json; sourceTree = "<group>"; };
@@ -1579,6 +1585,8 @@
 				04A4C3881C4F25F900B3B290 /* UIViewController+Stripe_ParentViewController.m */,
 				045D711E1CEFA57000F6CD65 /* UIViewController+Stripe_Promises.h */,
 				045D711F1CEFA57000F6CD65 /* UIViewController+Stripe_Promises.m */,
+				F1A2F92A1EEB6A70006B0456 /* NSCharacterSet+Stripe.h */,
+				F1A2F92B1EEB6A70006B0456 /* NSCharacterSet+Stripe.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1935,6 +1943,7 @@
 				C1271A3F1E3FA4EB00F25DFE /* STPSectionHeaderView.h in Headers */,
 				049E84D91A605EF0000B66CD /* Stripe.h in Headers */,
 				0439B9881C454F97005A1ED5 /* STPPaymentMethodsViewController.h in Headers */,
+				F1A2F92D1EEB6A70006B0456 /* NSCharacterSet+Stripe.h in Headers */,
 				04F94DAB1D229F3F004FC826 /* UIBarButtonItem+Stripe.h in Headers */,
 				04F94DC91D22A20A004FC826 /* STPSwitchTableViewCell.h in Headers */,
 				0433EB4B1BD06313003912B4 /* NSDictionary+Stripe.h in Headers */,
@@ -2047,6 +2056,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C15993361D8808680047950D /* STPShippingMethodsViewController.h in Headers */,
+				F1A2F92C1EEB6A70006B0456 /* NSCharacterSet+Stripe.h in Headers */,
 				04BC29A91CD9A83600318357 /* STPCheckoutAPIClient.h in Headers */,
 				F1D3A24E1EB012010095BFA9 /* STPMultipartFormDataPart.h in Headers */,
 				C11810A71CC6EE840022FB55 /* STPBackendAPIAdapter.h in Headers */,
@@ -2601,6 +2611,7 @@
 				04F94DA91D229F32004FC826 /* STPPaymentMethodTuple.m in Sources */,
 				04F94DC41D22A1F9004FC826 /* STPCheckoutAccount.m in Sources */,
 				04F94DB61D229F77004FC826 /* STPSMSCodeTextField.m in Sources */,
+				F1A2F92F1EEB6A70006B0456 /* NSCharacterSet+Stripe.m in Sources */,
 				F19491E51E60DD72001E1FC2 /* STPSourceSEPADebitDetails.m in Sources */,
 				0438EF311B7416BB00D506CC /* STPFormTextField.m in Sources */,
 				04B31DF51D09F0A800EF1631 /* UIViewController+Stripe_NavigationItemProxy.m in Sources */,
@@ -2799,6 +2810,7 @@
 				04BC29BA1CDA995000318357 /* STPCheckoutAccountLookup.m in Sources */,
 				F15232261EA9303800D65C67 /* STPURLCallbackHandler.m in Sources */,
 				049952D01BCF13510088C703 /* STPAPIRequest.m in Sources */,
+				F1A2F92E1EEB6A70006B0456 /* NSCharacterSet+Stripe.m in Sources */,
 				F1D3A24B1EB012010095BFA9 /* STPFile.m in Sources */,
 				049A3F9A1CC76A2400F57DE7 /* NSBundle+Stripe_AppName.m in Sources */,
 				049A3F7B1CC18D5300F57DE7 /* UIView+Stripe_FirstResponder.m in Sources */,
