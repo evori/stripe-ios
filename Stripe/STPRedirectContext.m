@@ -144,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
     [[STPURLCallbackHandler shared] unregisterListener:self];
 
     if (self.safariVC) {
-        [self.safariVC.presentingViewController dismissViewControllerAnimated:YES
+        [self.safariVC dismissViewControllerAnimated:YES
                                                                    completion:^{
                                                                        stpDispatchToMainThreadIfNecessary(^{
                                                                            [self handleRedirectCompletionWithError:nil];
